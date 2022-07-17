@@ -2,6 +2,8 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { useState, useEffect } from 'react'
 import { Layout } from '../Components/Layout'
+import { GoogleOAuthProvider } from '@react-oauth/google'
+
 const MyApp = ({ Component, pageProps }: AppProps) =>{
     /* Hooks */
 
@@ -20,11 +22,12 @@ const MyApp = ({ Component, pageProps }: AppProps) =>{
         
   return ( 
   <>
-    <Layout>
+      <GoogleOAuthProvider clientId={ `${process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN}` } >
+     <Layout>
       <Component {...pageProps} />
     </Layout>  
+      </GoogleOAuthProvider>
   </>
          )
 }
-
 export default MyApp

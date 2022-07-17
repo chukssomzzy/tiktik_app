@@ -6,7 +6,7 @@ interface layoutProps {
 
 const Layout = ({children}: layoutProps): JSX.Element => {
   return (
-    <div>
+      <div className='xl:w-[1200px] m-auto overflow-hidden h-full]'>
       <Navbar />
      <div className="flex gap-6 md:gap-6">
       <div className='h-[92vh] overflow-hidden xl:hover:overflow-auto'>
