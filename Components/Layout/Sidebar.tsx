@@ -7,7 +7,7 @@ import { ImCancelCircle } from 'react-icons/im'
 import { Discover, SuggestedAccount, Footer } from '.'
 const Sidebar = () => {
     /*--- Hooks ---*/
-    const [showSidebar, setShowSidebar] = useState(true)
+    const [showSidebar, setShowSidebar] = useState(false)
 
     /* --- Variables --- */ 
     
@@ -23,7 +23,7 @@ const Sidebar = () => {
              onClick={toggleSidebar}
          >
              {
-                 !showSidebar ? <ImCancelCircle /> : <AiOutlineMenu />
+                 showSidebar ? <ImCancelCircle /> : <AiOutlineMenu />
              }  
          </div>
          {

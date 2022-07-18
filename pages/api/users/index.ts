@@ -17,7 +17,8 @@ export default async function handler(
     if(req.method === 'GET'){
        try{
        const query = allUsersQuery()
-       const data = client.fetch(query)
+       const data = await client.fetch(query)
+       console.log(data)
        return res.status(200).json({status:'success',users:data})
        } catch (e) {
             console.error(e, 'something went wrong')

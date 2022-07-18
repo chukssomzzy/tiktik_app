@@ -83,12 +83,14 @@ const Detail = ({postDetail}: Iprops) => {
         
     }
     /*--- Conditional Rendering Vars---*/
-      let content;
 
-      if(!post) content = null 
+      if(!post) return null
 
 
-      else content = (
+      /* ---- JSX -----*/
+  
+      return (
+        <>
           <div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
               <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blend-darken">
                   <div className="absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
@@ -98,7 +100,7 @@ const Detail = ({postDetail}: Iprops) => {
                   </div>
                   <div className="relative">
                       <div className="lg:h-[100vh] h-[60vh]">
-                          <video src={post.video.asset.url} 
+                          <video src={post?.video?.asset?.url} 
                           className='h-full cursor-pointer' 
                               ref={videoRef}
                               loop 
@@ -134,9 +136,10 @@ const Detail = ({postDetail}: Iprops) => {
 
           <div className="flex gap-3 p-2 cursor-pointer rounder">
               <div className="ml-4 md:w-20 md:h-20 w-16 h-10">
-                  <Link href='/'>
+                  {/*  <Link href='/'>
                       <>
-                          <Image width={62} 
+                          <Image 
+                              width={62} 
                               height={62}
                               className='rounded-full'
                               src={post?.postedBy?.image}
@@ -144,20 +147,20 @@ const Detail = ({postDetail}: Iprops) => {
                               layout='responsive'
                           />
                       </>
-                  </Link>
+                      </Link> */}
               </div>
               <div>
                   <Link href={`/detail/${post?._id}`}>
                       <div className="mt-3 flex flex-col gap-2">
-                          <p className="flex gap2 items-center md:text-md font-bold text-primary">
-                              {post.postedBy.userName}    {' '}
+                          <p className="flex gap2 items-center md:text-md font-bold text-primary">                                     
+                              {post?.postedBy?.userName}    {' '}
                                   <GoVerified className="text-blue-400 text-md" />                        </p>
-                              <p className="capitalize font-medium text-xs gray-500 hidden md:block ">{post.postedBy.userName}</p>
+                              <p className="capitalize font-medium text-xs gray-500 hidden md:block ">{post?.postedBy?.userName}</p>
                       </div>
                   </Link>
               </div>
           </div>
-                      <p className="text-lg text-gray-600">{post.caption}</p>
+                      <p className="text-lg text-gray-600">{post?.caption}</p>
                       <div className="pt-10 mt-10">
                           {
                               userProfile && (
@@ -178,14 +181,6 @@ const Detail = ({postDetail}: Iprops) => {
                   </div>
               </div>
           </div>
-      )
-
-
-      /* ---- JSX -----*/
-  
-      return (
-        <>
-            {content}
         </>
   )
 }
@@ -193,9 +188,8 @@ const Detail = ({postDetail}: Iprops) => {
 export default  Detail
 
 export const getServerSideProps = async ({params:{id}}: {params: {id: string}}) => {
-    console.log(id)
-    const { data:{postDetail} } = await axios.get(`${BASE_URL}/api/post/${id}`)
-
+    const { data:{postDetail} } = await axios.get(`${BASE_URL}/api/posts/${id}`)
+        console.log(postDetail)
     return {
         props:{
           postDetail

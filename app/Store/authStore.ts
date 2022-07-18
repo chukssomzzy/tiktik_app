@@ -10,6 +10,7 @@ import { BASE_URL } from '../../utils'
      removeUser : ()=> set({ userProfile : null}),
      fetchAllUsers: async () =>{
          const { data:{users} } = await axios.get(`${BASE_URL}/api/users`)
+        console.log(users, 'at auth')
          set({allUsers: users})
      } 
     

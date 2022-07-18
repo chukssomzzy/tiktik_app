@@ -19,8 +19,7 @@ export default async function handler(
 ) {
     const {id} = req.query
     /*--- Get --- */
-      console.log(id)
-    if(req.method === 'GET'){
+    if(req.method === 'GET'){  
         const query = postDetailQuery(String(id))
       const data = await client.fetch(query)
       return res.status(200).json({ status: 'success', postDetail:data})
@@ -40,7 +39,6 @@ export default async function handler(
 
      }])                                                   
      .commit()) 
-     console.log(data)
       return res.status(201)
 .json({status:'success', comments: data})
     }
