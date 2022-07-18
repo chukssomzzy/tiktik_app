@@ -29,16 +29,16 @@ export default async function handler(
 
     else if(req.method === 'PATCH'){
        const { userId, comment} = req.body
-     const data =  (await client.patch(String(id)).setIfMissing({comments: []}).insert('after','comments[-1]',[{
+     const data =  await client.patch(String(id)).setIfMissing({comments: []}).insert('after','comments[-1]',[{
          _key: uuid(),
-   comment,
+         comment,
          postedBy: {
              _ref: userId,
              _type: 'postedBy',
          }
 
      }])                                                   
-     .commit()) 
+     .commit()
       return res.status(201)
 .json({status:'success', comments: data})
     }

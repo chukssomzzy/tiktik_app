@@ -63,7 +63,7 @@ const Comments = ({comments, comment, addComments, isPostingComment, setComment}
                onChange={(e)=> setComment(e.target.value)} 
                placeholder="add comment"
                className="bg-primary px-6 py-4 text-md font-md border-2 w-[250px] w-700px lg:w-[350px] border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 flex-1 rounded-lg" />        
-          <button className='text-md text-gray-400 ' onClick={addComments}>
+               <button className='text-md text-gray-400 mt-2 px-1 hover:bg-[#f51997] hover:text-white' onClick={addComments}>
               {
                   isPostingComment ? 'Commenting...' : 'Comment'
               }

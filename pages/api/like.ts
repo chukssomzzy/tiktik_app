@@ -11,7 +11,7 @@ type Data = {
 }  
 type BodyType = {
     userId: string,
-    postId: string,
+    postId: string,           
     like: boolean
 }
 
@@ -26,19 +26,18 @@ export default async function handler(
          postId,
          like
      } : BodyType = req.body
-
-     const data = like ? (await client.patch(postId).setIfMissing({likes: []}).insert('after','likes[-1]',[{
+       console.log(like)
+     const data = like ? await client.patch(postId).setIfMissing({likes: []}).insert('after','likes[-1]',[{
          _key:uuid(),
          _ref:userId,
-         like
-     }])                                                   
-     .commit()) 
-         :    ( await client
+     }])                                                  
+     .commit() 
+         :    await client
      .patch(postId)
-     .unset([`likes[_ref == '${userId}']`])
-     .commit() )
+     .unset([`likes[_ref == "${userId}"]`])
+     .commit() 
 
-     return res.status(201)
+     return res.status(200)
      .json({status:'success', likes: data})
  } 
 }

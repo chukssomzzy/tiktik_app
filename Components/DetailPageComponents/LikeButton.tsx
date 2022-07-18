@@ -11,13 +11,13 @@ interface Iprops {
 const LikeButton = ({handleDisLike,handleLike,likes}: Iprops) => {
     const [alreadyLiked, setAlreadyLiked] = useState(false)
     const { userProfile }: {userProfile: any}= useAuthStore()
-    const filterLike =
-        likes?.filter(like=>like?._ref === userProfile?._id)
+    console.log(likes)
+    const filterLike = likes?.filter(like=>like?._ref === userProfile?._id)
     useEffect(() => {
          if(!!filterLike?.length)
              setAlreadyLiked(true)
          setAlreadyLiked(false)
-    }, [likes])
+    }, [likes, filterLike?.length])
 
   return (
       <div className="flex gap-6">

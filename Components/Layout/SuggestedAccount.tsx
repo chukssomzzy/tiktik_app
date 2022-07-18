@@ -6,20 +6,20 @@ import { useAuthStore } from '../../app/Store/authStore'
 import { IUser } from '../../types'
 
 interface Iprop {
-    fetchAllUsers: () => void;
+    fetchAllUsers?: () => void;
     allUsers: IUser[]
 }
 const SuggestedAccount = () => {
-    const effectRef = useRef(false)
-    const {fetchAllUsers, allUsers}: Iprop = useAuthStore()
+    //const effectRef = useRef(false)
+    const { allUsers}: Iprop = useAuthStore()
     /* ---- useEffect ---- */
-    useEffect(()=>{
+ /*   useEffect(()=>{
        fetchAllUsers()                                          
        console.log('fetched users')
     },[fetchAllUsers])
     /* ---- JSX Vars ---- */
    
-/*  const users = allUsers
+ /* const users = allUsers
     .sort(() => 0.5 - Math.random())
     .slice(0, allUsers.length); */
   return (
@@ -28,8 +28,7 @@ const SuggestedAccount = () => {
           <p className="text-gray-500 font-semibold m-3 mt-4 hidden xl:block">Suggested Accounts</p>
 
           <div>
-              { /*
-  users?.slice(0,6)?.map((user: IUser) => (
+              { allUsers?.slice(0,6)?.map((user: IUser) => (
         <Link href={`/profile/${user?._id}`} passHref key={user._id}>
             <div className="flex gap-3 hover:bg-primary p-2 cursor-pointer font-semibold rounded">
                 <div className="w-8 h-8">
@@ -44,8 +43,8 @@ const SuggestedAccount = () => {
             </div>
         </Link>
     ))
-           
-                 */ }
+              }
+                 
           </div>
       </div>
   )

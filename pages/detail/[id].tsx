@@ -53,7 +53,7 @@ const Detail = ({postDetail}: Iprops) => {
 
     const handleLike = async ( like: boolean) =>{
         if(userProfile) {
-            const { data: {success, likes} } = await axios.patch(`${BASE_URL}/api/like`,{
+            const { data: {likes} } = await axios.patch(`${BASE_URL}/api/like`,{
                 userId : userProfile?._id,
                 postId : post?._id,
                 like
@@ -65,14 +65,15 @@ const Detail = ({postDetail}: Iprops) => {
     const addComments = async (e: any) =>{
         e.preventDefault()
         try{
-        if(userProfile && comment && !isPostingComment){
+        if(userProfile && comment && !isPostingComment ){
 
             setIsPostingState(true)
-            const { data: { comments} } = await axios.patch(`${BASE_URL}/api/post/${post?._id}`,{
+            const { data: { comments} } = await axios.patch(`${BASE_URL}/api/posts/${post?._id}`,{        
               userId: userProfile?._id,
               comment: comment.trim()
           })
-          setPost((prevPost):Video => ({...prevPost, comments}))
+          setPost({...post, comments})
+          console.log(post)
           setComment('')
         }
         }catch(e){
@@ -92,7 +93,7 @@ const Detail = ({postDetail}: Iprops) => {
       return (
         <>
           <div className="flex w-full absolute left-0 top-0 bg-white flex-wrap lg:flex-nowrap">
-              <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-blend-darken">
+              <div className="relative flex-2 w-[1000px] lg:w-9/12 flex justify-center items-center bg-black/90">
                   <div className="absolute top-6 left-2 lg:left-6 flex gap-6 z-50">
                       <p className='cursor-pointer ' onClick={()=> router.back()}>
                           <MdOutlineCancel className="text-white text-35px" />
@@ -100,19 +101,27 @@ const Detail = ({postDetail}: Iprops) => {
                   </div>
                   <div className="relative">
                       <div className="lg:h-[100vh] h-[60vh]">
-                          <video src={post?.video?.asset?.url} 
-                          className='h-full cursor-pointer' 
+                          <video 
+                              src={post?.video?.asset?.url} 
+                              className='h-full cursor-pointer' 
                               ref={videoRef}
                               loop 
-                              onClick={()=>{}}
+                              onClick= { onVideoClick }
                           />
                       </div>
                       <div className='absolute top-[45%] left-[45%] cursor-pointer'>
                           {
-                              !isPlaying  && (
+                              !isPlaying  ? 
+                                  (
                                   <button onClick={onVideoClick}>
 
-                                     <BsFillPlayFill className='text-white text-xl lg:text-8xl' /> 
+                                      <BsFillPlayFill className='text-white text-4xl lg:text-8xl' /> 
+                                     </button>
+                              )  : 
+                                  (
+                                  <button onClick={onVideoClick}>
+
+                                      <BsFillPauseFill className='text-white text-4xl lg:text-8xl hidden hover:block' /> 
                                      </button>
                               )
                           }
@@ -136,23 +145,17 @@ const Detail = ({postDetail}: Iprops) => {
 
           <div className="flex gap-3 p-2 cursor-pointer rounder">
               <div className="ml-4 md:w-20 md:h-20 w-16 h-10">
-                  {/*  <Link href='/'>
+                    <Link href= {`/profile/${post?.postedBy?._id}`} passHref>
                       <>
-                          <Image 
-                              width={62} 
-                              height={62}
-                              className='rounded-full'
-                              src={post?.postedBy?.image}
-                              alt={`posted by ${post?.postedBy?.userName}`}
-                              layout='responsive'
-                          />
+                        
+                          { <Image src={post?.postedBy?.image} width={62} height={62} className='rounded-full' alt='user profile' layout='responsive' /> }
                       </>
-                      </Link> */}
+                      </Link> 
               </div>
               <div>
                   <Link href={`/detail/${post?._id}`}>
                       <div className="mt-3 flex flex-col gap-2">
-                          <p className="flex gap2 items-center md:text-md font-bold text-primary">                                     
+                          <p className="flex gap2 items-center md:text-md font-bold text-primary">                             
                               {post?.postedBy?.userName}    {' '}
                                   <GoVerified className="text-blue-400 text-md" />                        </p>
                               <p className="capitalize font-medium text-xs gray-500 hidden md:block ">{post?.postedBy?.userName}</p>
@@ -189,10 +192,10 @@ export default  Detail
 
 export const getServerSideProps = async ({params:{id}}: {params: {id: string}}) => {
     const { data:{postDetail} } = await axios.get(`${BASE_URL}/api/posts/${id}`)
-        console.log(postDetail)
+    console.log(postDetail)
     return {
         props:{
-          postDetail
+            postDetail: postDetail[0]
         }
     }
 }                
