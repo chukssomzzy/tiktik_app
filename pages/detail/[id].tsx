@@ -169,7 +169,7 @@ const Detail = ({postDetail}: Iprops) => {
                               userProfile && (
                                   <LikeButton 
                                   handleLike={()=> handleLike(true)} 
-                                  handleDisLike={()=> handleLike(false)}
+                                      handleDisLike={()=> handleLike(false)}
                                   likes = {post?.likes}
                                   />
                               )

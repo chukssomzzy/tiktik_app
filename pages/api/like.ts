@@ -3,7 +3,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { client } from '../../utils/client'
-import { uuid } from 'uuidv4'
+import { v4 as uuidv4 } from 'uuid'
 
 type Data = {
   status: string,
@@ -28,7 +28,7 @@ export default async function handler(
      } : BodyType = req.body
        console.log(like)
      const data = like ? await client.patch(postId).setIfMissing({likes: []}).insert('after','likes[-1]',[{
-         _key:uuid(),
+         _key:uuidv4(),
          _ref:userId,
      }])                                                  
      .commit() 
@@ -38,6 +38,6 @@ export default async function handler(
      .commit() 
 
      return res.status(200)
-     .json({status:'success', likes: data})
+     .json({status:'success', likes: data.likes})
  } 
 }

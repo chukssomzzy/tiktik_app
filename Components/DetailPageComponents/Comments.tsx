@@ -5,7 +5,7 @@ import NoResult from '../../Components/HomePageComponents/NoResult'
 import { useAuthStore } from '../../app/Store/authStore'
 import { Dispatch, SetStateAction } from 'react'
 import { Comment, IUser } from '../../types'
-
+import { v4 as uuidv4 } from 'uuid'
 interface Iprops {
 comments: Comment[];
 comment: string;
@@ -23,13 +23,13 @@ const Comments = ({comments, comment, addComments, isPostingComment, setComment}
 
     /* ---- JSX Variablea ---- */ 
 
-    const  commentsJsx = comments?.map((comment: Comment,index: number)=> (
+    const  commentsJsx = comments?.map((comment: Comment)=> (
         <>
             {
                 allUsers.map((user: IUser) =>((
           user._id === comment.postedBy._id || comment.postedBy._ref
             ) && (
-            <div className="p-2 items-center" key={index}>
+            <div className="p-2 items-center" key={uuidv4()}>
                 <Link href={`/profile/${user?._id}`} passHref>
                     <div className="flex items-start gap-3">
                 <div className="w-8 h-8">

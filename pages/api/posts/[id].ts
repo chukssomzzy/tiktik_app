@@ -40,7 +40,7 @@ export default async function handler(
      }])                                                   
      .commit()
       return res.status(201)
-.json({status:'success', comments: data})
+.json({status:'success', comments: data.comments})
     }
 }
     
