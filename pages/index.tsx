@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Video } from '../types'
 import { NoResult, VideoCard } from '../Components/HomePageComponents'
-import { BASE_URL } from '../utils'
+import { v4 as uuidv4 } from 'uuid'
 interface IProps {
     videos: Video[] 
 }
@@ -10,7 +10,7 @@ const Home = ({ videos }: IProps) => {
 
     /* --- JSX Var --- */
     const videosMap:JSX.Element[] = videos.map((video: Video) => (
-        <VideoCard key={video?._id} post={video}/>
+        <VideoCard key={uuidv4()} post={video}/>
     ))
 
 
@@ -26,11 +26,17 @@ const Home = ({ videos }: IProps) => {
 }
 
 
-export const getServerSideProps = async ()=>{
-    const { data: {videos} } = await axios.get(`${BASE_URL}/api/posts`)
+export const getServerSideProps = async ({query:{topic}}: {query:{topic: string}})=>{
+    let response
+    if(topic)
+         response = await axios.get(`/api/discover/${topic}`)
+    
+     else  
+     response = await axios.get(`/api/posts`)
+    
      return {
          props : {
-             videos
+             videos: response.data.videos
          }
      }
 }

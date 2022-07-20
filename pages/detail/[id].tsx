@@ -6,7 +6,6 @@ import { GoVerified } from 'react-icons/go'
 import { MdOutlineCancel } from 'react-icons/md'
 import { BsFillPlayFill , BsFillPauseFill} from 'react-icons/bs'
 import {HiVolumeUp, HiVolumeOff} from 'react-icons/hi'
-import { BASE_URL } from '../../utils/index'
 import axios from 'axios'
 import { Video } from '../../types' 
 import { useAuthStore } from '../../app/Store/authStore'
@@ -20,6 +19,7 @@ const Detail = ({postDetail}: Iprops) => {
     /* --- Hooks ---- */
     const [post, setPost] = useState(postDetail)
     const [isPlaying, setIsPlaying] = useState(false)
+    const [alreadyLiked, setAlreadyLiked] = useState(false)
     const [isMuted, setIsMuted] = useState(false)
     const [comment, setComment] = useState('')
     const [isPostingComment, setIsPostingState] = useState(false)
@@ -50,10 +50,10 @@ const Detail = ({postDetail}: Iprops) => {
             setIsPlaying(true)
         }
     }
-
+    /* -- Handle Ljke -- */
     const handleLike = async ( like: boolean) =>{
         if(userProfile) {
-            const { data: {likes} } = await axios.patch(`${BASE_URL}/api/like`,{
+            const { data: {likes} } = await axios.patch(`/api/like`,{
                 userId : userProfile?._id,
                 postId : post?._id,
                 like
@@ -68,7 +68,7 @@ const Detail = ({postDetail}: Iprops) => {
         if(userProfile && comment && !isPostingComment ){
 
             setIsPostingState(true)
-            const { data: { comments} } = await axios.patch(`${BASE_URL}/api/posts/${post?._id}`,{        
+            const { data: { comments} } = await axios.patch(`/api/posts/${post?._id}`,{        
               userId: userProfile?._id,
               comment: comment.trim()
           })
@@ -153,8 +153,8 @@ const Detail = ({postDetail}: Iprops) => {
                       </Link> 
               </div>
               <div>
-                  <Link href={`/detail/${post?._id}`}>
-                      <div className="mt-3 flex flex-col gap-2">
+                  <Link href={`/profile/${post?.postedBy?._id}`}>
+                      <div className="flex items-center gap-2">
                           <p className="flex gap2 items-center md:text-md font-bold text-primary">                             
                               {post?.postedBy?.userName}    {' '}
                                   <GoVerified className="text-blue-400 text-md" />                        </p>
@@ -170,7 +170,10 @@ const Detail = ({postDetail}: Iprops) => {
                                   <LikeButton 
                                   handleLike={()=> handleLike(true)} 
                                       handleDisLike={()=> handleLike(false)}
-                                  likes = {post?.likes}
+                                      likes = {post?.likes}
+                                      alreadyLiked={alreadyLiked}
+                                      setAlreadyLiked={setAlreadyLiked}
+                                      
                                   />
                               )
                           }
@@ -191,7 +194,7 @@ const Detail = ({postDetail}: Iprops) => {
 export default  Detail
 
 export const getServerSideProps = async ({params:{id}}: {params: {id: string}}) => {
-    const { data:{postDetail} } = await axios.get(`${BASE_URL}/api/posts/${id}`)
+    const { data:{postDetail} } = await axios.get(`/api/posts/${id}`)
     console.log(postDetail)
     return {
         props:{

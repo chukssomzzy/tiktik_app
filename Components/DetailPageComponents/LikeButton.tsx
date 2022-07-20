@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react'
+import { Dispatch, useEffect,SetStateAction } from 'react'
 import { MdFavorite } from 'react-icons/md'
 import { useAuthStore } from '../../app/Store/authStore'
 
@@ -6,10 +6,11 @@ interface Iprops {
     handleDisLike: () => void 
     handleLike: () => void
     likes : any[]
+    alreadyLiked: boolean,
+    setAlreadyLiked: Dispatch<SetStateAction<boolean>>
 }
 
-const LikeButton = ({handleDisLike,handleLike,likes}: Iprops) => {
-    const [alreadyLiked, setAlreadyLiked] = useState(true)
+const LikeButton = ({handleDisLike,handleLike,likes,alreadyLiked,setAlreadyLiked}: Iprops) => {
     const { userProfile }: {userProfile: any}= useAuthStore()
     console.log(likes)
     const filterLike = likes?.filter(like=>like?._ref === userProfile?._id)
@@ -18,7 +19,7 @@ const LikeButton = ({handleDisLike,handleLike,likes}: Iprops) => {
             setAlreadyLiked(true)
         else 
           setAlreadyLiked(false)
-    }, [likes, filterLike])
+    }, [likes, filterLike,alreadyLiked,setAlreadyLiked])
    console.log(alreadyLiked)
   return (
       <div className="flex gap-6 justify-center items-center">
