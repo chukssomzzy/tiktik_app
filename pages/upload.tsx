@@ -27,6 +27,7 @@ const Upload = () => {
          const selectedFile = e.target.files[0]
          const fileType = ['video/mp4','video/webm','video/ogg']
        if(fileType.includes(selectedFile.type)){
+           setLoading(true)
           try{
               const data = await client.assets.upload('file', 
                                                       selectedFile,{
@@ -35,11 +36,13 @@ const Upload = () => {
                                                       })
 
              setVideoAsset(data)
+             setIsLoading(false)
           }catch (e){
               setIsLoading(false)
               console.log(e)
           }
          }else{
+             setIsLoading(false)
              setWrongFileType(true)
          }
          setIsLoading(false)
@@ -77,6 +80,12 @@ const Upload = () => {
            setSavingPost(false)
            console.log(e)
        }
+   }
+   const handleDiscard = () =>{
+       setSavingPost(false)
+       setVideoAsset(undefined)
+       setCaption('')
+       setTopic('')
    }
     /* ---- JSX Maps Var---- */ 
     const optionSelect =topics.map((topic: Topic, index: number): JSX.Element =>(
@@ -173,7 +182,7 @@ const Upload = () => {
                           {optionSelect}
                       </select>
                       <div className="flex mt-10">
-                          <button onClick={()=>{}} disabled={canUpload} type="button" className="border-gray-300 border-2 text-md p-2 font-medium rounded w-28 lg:w-44 outline-none">Discard</button>
+                          <button onClick={handleDiscard} type="button" className="border-gray-300 border-2 text-md p-2 font-medium rounded w-28 lg:w-44 outline-none">Discard</button>
                           <button onClick={handlePost} disabled={!canUpload} type="button" className="text-md p-2 font-medium rounded w-28 lg:w-44 outline-none bg-[#f51997] text-white ">Post</button>
 
                       </div>

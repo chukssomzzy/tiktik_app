@@ -11,8 +11,9 @@ const Sidebar = () => {
     const router = useRouter()
     /* --- Variables --- */ 
     
-    const topic = router.query
-    const normalLink = 'flex item-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointerfont-semibold text-black  rounded'
+    const { pathname } = router.query
+    console.log(topic)
+    const normalLink = 'flex item-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointerfont-semibold  rounded'
 
     const activeLink = 'flex item-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointerfont-semibold text-[#F51997] rounded'
     /* ----function----*/ 
@@ -33,7 +34,8 @@ const Sidebar = () => {
                  <div className="xl:w-400 w-20 flex flex-col justify-start mb-10 border-r-2 border-gray-100 p-3 xl:border-0">   
                      <div className='xl:border-b-2 border-gray-200 xl:pb-4'>
                      <Link href='/'>
-                         <div className={topic ? normalLink : activeLink}> 
+                         <div className={pathname === '/'? normalLink : activeLink}> 
+
                             <p className="text-2xl">
                                 <AiFillHome />
                             </p>
