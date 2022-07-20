@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Video } from '../types'
 import { NoResult, VideoCard } from '../Components/HomePageComponents'
 import { v4 as uuidv4 } from 'uuid'
+import { BASE_URL } from '../utils'
 interface IProps {
     videos: Video[] 
 }
@@ -29,10 +30,10 @@ const Home = ({ videos }: IProps) => {
 export const getServerSideProps = async ({query:{topic}}: {query:{topic: string}})=>{
     let response
     if(topic)
-         response = await axios.get(`/api/discover/${topic}`)
+         response = await axios.get(`${BASE_URL}/api/discover/${topic}`)
     
      else  
-     response = await axios.get(`/api/posts`)
+     response = await axios.get(`${BASE_URL}/api/posts`)
     
      return {
          props : {

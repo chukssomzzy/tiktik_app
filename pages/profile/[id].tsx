@@ -5,6 +5,7 @@ import axios from 'axios'
 import { NoResult, VideoCard } from '../../Components/HomePageComponents/'
 import { IUser,Video } from '../../types'
 import { v4 as uuidv4 } from 'uuid'
+import { BASE_URL } from '../../utils'
 interface Iprops {
     user: IUser;
     userVideos: Video[]; 
@@ -79,7 +80,7 @@ export default Profile
 
 
 export const getServerSideProps = async ({params:{id}} : {params:{id: string}})=>{
-    const {data:{user, userVideos, userLikedVideos}}: {data: Iprops}= await axios.get(`/api/profile/${id}`)
+    const {data:{user, userVideos, userLikedVideos}}: {data: Iprops}= await axios.get(`${BASE_URL}/api/profile/${id}`)
     return {
         props: {
             user,

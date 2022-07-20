@@ -10,6 +10,7 @@ import axios from 'axios'
 import { Video } from '../../types' 
 import { useAuthStore } from '../../app/Store/authStore'
 import { LikeButton, Comments } from '../../Components/DetailPageComponents'
+import { BASE_URL } from '../../utils'
 
 interface Iprops {
     postDetail: Video
@@ -53,7 +54,7 @@ const Detail = ({postDetail}: Iprops) => {
     /* -- Handle Ljke -- */
     const handleLike = async ( like: boolean) =>{
         if(userProfile) {
-            const { data: {likes} } = await axios.patch(`/api/like`,{
+            const { data: {likes} } = await axios.patch(`${BASE_URL}/api/like`,{
                 userId : userProfile?._id,
                 postId : post?._id,
                 like
@@ -68,7 +69,7 @@ const Detail = ({postDetail}: Iprops) => {
         if(userProfile && comment && !isPostingComment ){
 
             setIsPostingState(true)
-            const { data: { comments} } = await axios.patch(`/api/posts/${post?._id}`,{        
+            const { data: { comments} } = await axios.patch(`${BASE_URL}/api/posts/${post?._id}`,{        
               userId: userProfile?._id,
               comment: comment.trim()
           })
@@ -194,7 +195,7 @@ const Detail = ({postDetail}: Iprops) => {
 export default  Detail
 
 export const getServerSideProps = async ({params:{id}}: {params: {id: string}}) => {
-    const { data:{postDetail} } = await axios.get(`/api/posts/${id}`)
+    const { data:{postDetail} } = await axios.get(`${BASE_URL}/api/posts/${id}`)
     console.log(postDetail)
     return {
         props:{

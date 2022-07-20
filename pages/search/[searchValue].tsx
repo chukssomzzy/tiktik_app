@@ -9,6 +9,7 @@ import { NoResult, VideoCard } from '../../Components/HomePageComponents/'
 import { IUser,Video } from '../../types'
 import { v4 as uuidv4 } from 'uuid'
 import { useAuthStore } from '../../app/Store/authStore'
+import { BASE_URL } from '../../utils'
 
 interface Iprop {
     videos: Video[]
@@ -89,7 +90,7 @@ const Search = ({videos}:Iprop) => {
 export default Search
 
 export const getServerSideProps = async ({params: {searchValue}}: { params: { searchValue: string}})=>{
-    const {data: videos} = await axios.get(`/search/${searchValue}`)
+    const {data: videos} = await axios.get(`${BASE_URL}/api/search/${searchValue}`)
 
     return {
         props: {
