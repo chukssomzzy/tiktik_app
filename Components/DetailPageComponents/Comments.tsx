@@ -5,7 +5,7 @@ import NoResult from '../../Components/HomePageComponents/NoResult'
 import { useAuthStore } from '../../app/Store/authStore'
 import { Dispatch, SetStateAction } from 'react'
 import { Comment, IUser } from '../../types'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from "uuid"
 interface Iprops {
 comments: Comment[];
 comment: string;
@@ -23,23 +23,23 @@ const Comments = ({comments, comment, addComments, isPostingComment, setComment}
 
     /* ---- JSX Variablea ---- */ 
 
-    const  commentsJsx = comments?.map((comment: Comment)=> (
+    const  commentsJsx = comments?.map((comment: Comment,index: number)=> (
         <>
             {
                 allUsers.map((user: IUser) =>((
           user._id === comment.postedBy._id || comment.postedBy._ref
             ) && (
-            <div className="p-2 items-center" key={uuidv4()}>
+            <div className="items-center p-2" key={uuidv4()}>
                 <Link href={`/profile/${user?._id}`} passHref>
                     <div className="flex items-start gap-3">
                 <div className="w-8 h-8">
                     <Image src={user.image} width={34} height={34} className="rounded-full" alt="user profile" layout="responsive" />
                 </div>
                 <div className="hidden xl:block">
-                    <p className='flex gap-1 items-center text-md font-bold text-primary lowercase'>
+                    <p className='flex items-center gap-1 font-bold lowercase text-md text-primary'>
                 {user.userName.replace(' ','')} <GoVerified className='text-blue-400'/>
                         </p>
-                    <p className="capitalize text-gray-400 text-xl-small">{ user.userName }</p>
+                    <p className="text-gray-400 capitalize text-xl-small">{ user.userName }</p>
                 </div>
                     </div>
                 </Link>
@@ -55,7 +55,7 @@ const Comments = ({comments, comment, addComments, isPostingComment, setComment}
    ) )
    
    const commentForm = (
-       <div className="absolute bottom-0 left-0 pb-6 px-2 md:px-10">
+       <div className="absolute bottom-0 left-0 px-2 pb-6 md:px-10">
            <form onSubmit={addComments} className="flex gap-4">
 
                <input type="text"
@@ -63,8 +63,8 @@ const Comments = ({comments, comment, addComments, isPostingComment, setComment}
                onChange={(e)=> setComment(e.target.value)} 
                placeholder="add comment"
                className="bg-primary px-6 py-4 text-md font-md border-2 w-[250px] w-700px lg:w-[350px] border-gray-100 focus:outline-none focus:border-2 focus:border-gray-300 flex-1 rounded-lg" />        
-               <button className='text-md text-gray-400 mt-2 px-1 hover:bg-[#f51997] hover:text-white' onClick={addComments}>
-              {
+               <button className='text-md text-gray-400 mt-2 px-3 bg-[#f51997] hover:text-white' onClick={addComments}>
+              { 
                   isPostingComment ? 'Commenting...' : 'Comment'
               }
           </button>

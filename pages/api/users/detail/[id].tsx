@@ -84,9 +84,7 @@ const Detail = ({postDetail}: Iprops) => {
         }
         
     }
-    console.log(post)
-        
-        /*--- Conditional Rendering Vars---*/
+    /*--- Conditional Rendering Vars---*/
 
       if(!post) return null
 
@@ -198,6 +196,7 @@ export default  Detail
 
 export const getServerSideProps = async ({params:{id}}: {params: {id: string}}) => {
     const { data:{postDetail} } = await axios.get(`${BASE_URL}/api/posts/${id}`)
+    console.log(postDetail)
     return {
         props:{
             postDetail: postDetail[0]

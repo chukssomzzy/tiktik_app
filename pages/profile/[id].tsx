@@ -38,7 +38,7 @@ const Profile = ({user,userVideos,userLikedVideos}: Iprops) => {
 
   return (
       <div className="w-full">
-          <div className="flex gap-6 md:gap-10 mb-4 bg-white w-full">
+          <div className="flex w-full gap-6 mb-4 bg-white md:gap-10">
               <div className="w-16 h-16 md:w-32 md:h-32">
                     <Image 
                     src={user?.image} 
@@ -49,21 +49,19 @@ const Profile = ({user,userVideos,userLikedVideos}: Iprops) => {
                     priority
                     />
                 </div>
-                <div className='flex justify-center flex-col'>
-                    <p className='flex gap-1 md:text-2xl tracking-wider items-center justify-center text-md font-bold text-primary lowercase'>
+                <div className='flex flex-col justify-center'>
+                    <p className='flex items-center justify-center gap-1 font-bold tracking-wider lowercase md:text-2xl text-md text-primary'>
                 {user?.userName?.replace(' ','')} <GoVerified className='text-blue-400'/>
                         </p>
-                    <p className="capitalize text-gray-400 text-xl-small md:text-xl">{ user?.userName }</p>
+                    <p className="text-gray-400 capitalize text-xl-small md:text-xl">{ user?.userName }</p>
                 </div>
           </div>
           <div>
-              <div className="flex gap-10 mb-10 mt-10 border-b-2 border-gray-200 bg-white w-full">
+              <div className="flex w-full gap-10 mt-10 mb-10 bg-white border-b-2 border-gray-200">
                   <p className={`text-xl font-semibold cursor-pointer mt-2 ${videos}`} onClick={()=> setShowUsersVideos(true)}>Videos</p>
+            <p className={`text-xl font-semibold cursor-pointer mt-2 ${liked}`} onClick={()=> setShowUsersVideos(false)}>Liked</p>
               </div>
-              <div className="flex gap-10 mb-10 mt-10 border-b-2 border-gray-200 bg-white w-full">
-                  <p className={`text-xl font-semibold cursor-pointer mt-2 ${liked}`} onClick={()=> setShowUsersVideos(false)}>Videos</p>
-              </div>
-              <div className="flex gap-6 flex-wrap md:justify-start">
+              <div className="flex flex-wrap gap-6 md:justify-start">
                   {
                       !!videosList?.length ?
                           ( videosListMap ) : (

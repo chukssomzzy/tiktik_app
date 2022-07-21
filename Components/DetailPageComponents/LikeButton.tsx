@@ -12,15 +12,15 @@ interface Iprops {
 
 const LikeButton = ({handleDisLike,handleLike,likes,alreadyLiked,setAlreadyLiked}: Iprops) => {
     const { userProfile }: {userProfile: any}= useAuthStore()
-    console.log(likes)
     const filterLike = likes?.filter(like=>like?._ref === userProfile?._id)
+    
     useEffect(() => {
-         if(!!filterLike.length)
+         if(!!filterLike?.length)
             setAlreadyLiked(true)
         else 
           setAlreadyLiked(false)
     }, [likes, filterLike,alreadyLiked,setAlreadyLiked])
-   console.log(alreadyLiked)
+   
   return (
       <div className="flex gap-6 justify-center items-center">
           <div className="mt-4 flex flex-col justify-center items-center cursor-pointer">

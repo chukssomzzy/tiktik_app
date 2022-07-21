@@ -14,7 +14,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   
-    if(req.method === 'POST'){
+    if(req.method === 'GET'){
        try{
            const {topic}: any =  req.query
            const data = await client.fetch(topicPostsQuery(topic))

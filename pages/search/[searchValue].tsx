@@ -36,33 +36,35 @@ const Search = ({videos}:Iprop) => {
                      searchedAccount.length ? (
                          searchedAccount?.map((user: IUser)=>
                ( <Link key={uuidv4()} href={`/profile/${user?._id}`} passHref>
-                    <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded border-b-2 border-gray-200">
+                    <div className="flex gap-3 p-2 font-semibold border-b-2 border-gray-200 rounded cursor-pointer">
                 <div >
                     <Image src={user.image} width={50} height={50} className="rounded-full" alt="user profile" />
                 </div>
-                <div className="hidden xl:block">
-                    <p className='flex gap-1 items-center text-md font-bold text-primary lowercase'>
+                <div>
+                    <div>
+                    <p className='flex items-center gap-1 font-bold lowercase text-md text-primary'>
                 {user.userName.replace(' ','')} <GoVerified className='text-blue-400'/>
                         </p>
-                    <p className="capitalize text-gray-400 text-xl-small">{ user.userName }</p>
+                    <p className="text-gray-400 capitalize text-xl-small">{ user.userName }</p>
+                    </div>
                     </div>
                     </div>
               </Link>)
                          )
                      ) : (
-                     <NoResult text={`No Video Result for ${searchValue}`} typeObj='users'/>
+                     <NoResult text={`No accounts for ${searchValue}`} typeObj='users'/>
                      )
                  }
              </div>
     )
     const videosList = (
-        <div className="md:mt-16 flex flex-wrap gap-6 md:justify-start">
+        <div className="flex flex-wrap gap-6 md:mt-16 md:justify-start">
             {
                 videos?.length ? (                          
                 videos.map((video: Video)=>
                    (<VideoCard post={video} key={uuidv4()}/>))
                 ) : (
-                <NoResult typeObj='videos' text={`No videos result for ${searchValue}`} />
+                <NoResult typeObj='video' text={`No videos result for ${searchValue}`} />
                 )
             }
     </div>
@@ -70,11 +72,9 @@ const Search = ({videos}:Iprop) => {
     /* --- JSX --- */
   return (
       <div className="w-full">
-              <div className="flex gap-10 mb-10 mt-10 border-b-2 border-gray-200 bg-white w-full">
-                  <p className={`text-xl font-semibold cursor-pointer mt-2 ${accounts}`} onClick={()=> setIsAccounts(true)}>Accounts</p>
-              </div>
-              <div className="flex gap-10 mb-10 mt-10 border-b-2 border-gray-200 bg-white w-full">
-                  <p className={`text-xl font-semibold cursor-pointer mt-2 ${isVideos}`} onClick={()=> setIsAccounts(false)}>Videos</p>
+              <div className="flex w-full gap-10 mt-10 mb-10 bg-white border-b-2 border-gray-200">
+                  <p className={`text-xl font-semibold cursor-pointer mt-2 ${isVideos}`} onClick={()=> setIsAccounts(true)}>Accounts</p>
+                  <p className={`text-xl font-semibold cursor-pointer mt-2 ${accounts}`} onClick={()=> setIsAccounts(false)}>Videos</p>
               </div>
           {
               isAccounts ? (

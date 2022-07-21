@@ -18,7 +18,7 @@ const Home = ({ videos }: IProps) => {
 
     /* --- JSX --- */
   return (
-    <div className="flex flex-col gap-10 h-full">
+    <div className="flex flex-col h-full gap-10">
         {
             !!videos.length ? videosMap : <NoResult typeObj='video' text='No Video Yet'/>  
         } 

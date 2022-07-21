@@ -12,7 +12,7 @@ const Sidebar = () => {
     /* --- Variables --- */ 
     
     const { pathname } = router.query
-    console.log(topic)
+
     const normalLink = 'flex item-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointerfont-semibold  rounded'
 
     const activeLink = 'flex item-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointerfont-semibold text-[#F51997] rounded'
