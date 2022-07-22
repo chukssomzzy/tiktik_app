@@ -7,16 +7,16 @@ import { MdOutlineCancel } from 'react-icons/md'
 import { BsFillPlayFill , BsFillPauseFill} from 'react-icons/bs'
 import {HiVolumeUp, HiVolumeOff} from 'react-icons/hi'
 import axios from 'axios'
-import { Video } from '../../types' 
+import { Video } from '../../types.d' 
 import { useAuthStore } from '../../app/Store/authStore'
 import { LikeButton, Comments } from '../../Components/DetailPageComponents'
 import { BASE_URL } from '../../utils'
 
-interface Iprops {
+interface IProps {
     postDetail: Video
 }
 
-const Detail = ({postDetail}: Iprops) => {
+const Detail = ({postDetail}: IProps) => {
     /* --- Hooks ---- */
     const [post, setPost] = useState(postDetail)
     const [isPlaying, setIsPlaying] = useState(false)
@@ -51,7 +51,7 @@ const Detail = ({postDetail}: Iprops) => {
             setIsPlaying(true)
         }
     }
-    /* -- Handle Ljke -- */
+    /* -- Handle Like -- */
     const handleLike = async ( like: boolean) =>{
         if(userProfile) {
             const { data: {likes} } = await axios.patch(`${BASE_URL}/api/like`,{
