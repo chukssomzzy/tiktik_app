@@ -7,7 +7,7 @@ import { MdOutlineCancel } from 'react-icons/md'
 import { BsFillPlayFill , BsFillPauseFill} from 'react-icons/bs'
 import {HiVolumeUp, HiVolumeOff} from 'react-icons/hi'
 import axios from 'axios'
-import { Video } from '../../types' 
+import { Video } from '../../types.d' 
 import { useAuthStore } from '../../app/Store/authStore'
 import { LikeButton, Comments } from '../../Components/DetailPageComponents'
 import { BASE_URL } from '../../utils'
@@ -18,7 +18,7 @@ interface Iprops {
 
 const Detail = ({postDetail}: Iprops) => {
     /* --- Hooks ---- */
-    const [post, setPost] = useState(postDetail)
+    const [post, setPost] = useState<Video>(postDetail)
     const [isPlaying, setIsPlaying] = useState(false)
     const [alreadyLiked, setAlreadyLiked] = useState(false)
     const [isMuted, setIsMuted] = useState(false)
@@ -59,7 +59,7 @@ const Detail = ({postDetail}: Iprops) => {
                 postId : post?._id,
                 like
             })
-            setPost(prevPost => ({...prevPost, likes}))
+            setPost((prevPost: Video)=> ({...prevPost, likes}))
         }
     }
 

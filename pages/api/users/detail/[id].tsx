@@ -7,10 +7,10 @@ import { MdOutlineCancel } from 'react-icons/md'
 import { BsFillPlayFill , BsFillPauseFill} from 'react-icons/bs'
 import {HiVolumeUp, HiVolumeOff} from 'react-icons/hi'
 import axios from 'axios'
-import { Video } from '../../types' 
-import { useAuthStore } from '../../app/Store/authStore'
-import { LikeButton, Comments } from '../../Components/DetailPageComponents'
-import { BASE_URL } from '../../utils'
+import { Video } from '../../../../types' 
+import { useAuthStore } from '../../../../app/Store/authStore'
+import { LikeButton, Comments } from '../../../../Components/DetailPageComponents'
+import { BASE_URL } from '../../../../utils'
 
 interface Iprops {
     postDetail: Video
