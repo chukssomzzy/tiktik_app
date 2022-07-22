@@ -27,7 +27,7 @@ const Upload = () => {
          const selectedFile = e.target.files[0]
          const fileType = ['video/mp4','video/webm','video/ogg']
        if(fileType.includes(selectedFile.type)){
-           setLoading(true)
+           setIsLoading(true)
           try{
               const data = await client.assets.upload('file', 
                                                       selectedFile,{
@@ -85,7 +85,7 @@ const Upload = () => {
        setSavingPost(false)
        setVideoAsset(undefined)
        setCaption('')
-       setTopic('')
+       setTopicValue('')
    }
     /* ---- JSX Maps Var---- */ 
     const optionSelect =topics.map((topic: Topic, index: number): JSX.Element =>(

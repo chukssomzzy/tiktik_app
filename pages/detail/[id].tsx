@@ -30,7 +30,7 @@ const Detail = ({postDetail}: Iprops) => {
         
     } = useAuthStore( )
     const router = useRouter()
-    /* ---- UseEffects --- */ 
+    /* --- UseEffects --- */ 
     useEffect(() => {
     if(post && videoRef?.current){
         videoRef.current.muted = isMuted
@@ -59,7 +59,8 @@ const Detail = ({postDetail}: Iprops) => {
                 postId : post?._id,
                 like
             })
-            setPost(prevPost => ({...prevPost, likes}))
+            setPost({...post, likes})
+
         }
     }
 
