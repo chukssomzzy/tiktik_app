@@ -12,11 +12,11 @@ import { useAuthStore } from '../../app/Store/authStore'
 import { LikeButton, Comments } from '../../Components/DetailPageComponents'
 import { BASE_URL } from '../../utils'
 
-interface Iprops {
+interface IProps {
     postDetail: Video
 }
 
-const Detail = ({postDetail}: Iprops) => {
+const Detail = ({postDetail}: IProps) => {
     /* --- Hooks ---- */
     const [post, setPost] = useState<Video>(postDetail)
     const [isPlaying, setIsPlaying] = useState(false)
@@ -24,13 +24,14 @@ const Detail = ({postDetail}: Iprops) => {
     const [isMuted, setIsMuted] = useState(false)
     const [comment, setComment] = useState('')
     const [isPostingComment, setIsPostingState] = useState(false)
+    const [savingLike, setSavinglike] = useState<boolean>(false)
     const videoRef = useRef<HTMLVideoElement>(null)
     const {userProfile}:{
         userProfile: any
         
     } = useAuthStore( )
     const router = useRouter()
-    /* ---- UseEffects --- */ 
+    /* --- UseEffects --- */ 
     useEffect(() => {
     if(post && videoRef?.current){
         videoRef.current.muted = isMuted
@@ -51,18 +52,20 @@ const Detail = ({postDetail}: Iprops) => {
             setIsPlaying(true)
         }
     }
-    /* -- Handle Ljke -- */
+    /* -- Handle Like -- */
     const handleLike = async ( like: boolean) =>{
-        if(userProfile) {
+        if(userProfile && !savingLike) {
+            setSavinglike(true)
             const { data: {likes} } = await axios.patch(`${BASE_URL}/api/like`,{
                 userId : userProfile?._id,
                 postId : post?._id,
                 like
             })
-            setPost((prevPost: Video)=> ({...prevPost, likes}))
-        }
+            setPost((prevPost: Video)=> ({...prevPost, likes }))
+            setSavinglike(false)
+            }
+            setSavinglike(false)
     }
-
     const addComments = async (e: any) =>{
         e.preventDefault()
         try{
@@ -176,7 +179,6 @@ const Detail = ({postDetail}: Iprops) => {
                                       likes = {post?.likes}
                                       alreadyLiked={alreadyLiked}
                                       setAlreadyLiked={setAlreadyLiked}
-                                      
                                   />
                               )
                           }
